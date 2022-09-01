@@ -1,69 +1,50 @@
-const stopBut = document.getElementById('stopButton');
 const stopLight = document.getElementById('stopLight');
-
-const slowBut = document.getElementById('slowButton');
 const slowLight = document.getElementById('slowLight');
-
-const goBut = document.getElementById('goButton');
 const goLight = document.getElementById('goLight');
-
+const controls = document.getElementById('controls');
 const starterColor = slowLight.style.backgroundColor;
 
-document.addEventListener("DOMContentLoaded", (function() {
+const obj = {
+  "Stop": [stopLight, "red"],
+  "Slow": [slowLight, "yellow"],
+  "Go": [goLight, "green"]
+}
+
+document.addEventListener("DOMContentLoaded", (function () {
   'use strict';
 
-  stopBut.addEventListener("click", toggleStop);
-  stopBut.addEventListener("mouseover", () => {
-    console.log(`Entered Stop button`)
-  });
-  stopBut.addEventListener("mouseout", () => {
-    console.log(`left Stop button`)
-  });
-
-
-  slowBut.addEventListener("click", toggleSlow);
-  slowBut.addEventListener("mouseover", () => {
-    console.log(`Entered Slow button`)
-  });
-  slowBut.addEventListener("mouseout", () => {
-    console.log(`left Slow button`)
-  });
-
-  goBut.addEventListener("click", toggleGo);
-  goBut.addEventListener("mouseover", () => {
-    console.log(`Entered Go button`)
-  });
-  goBut.addEventListener("mouseout", () => {
-    console.log(`left Go button`)
-  });
-
+  controls.addEventListener("click", toggle);
+  controls.addEventListener("mouseover", hover);
+  controls.addEventListener("mouseout", leave);
 
 }))
 
 
-function toggleStop() {
+function toggle(e) {
 
-  if (stopLight.style.backgroundColor === starterColor) {
-    stopLight.style.backgroundColor = "red";
+  if (obj[e.target.textContent.toString()]) {
+
+    var but = obj[e.target.textContent.toString()];
+
+    if (but[0].style.backgroundColor === starterColor) {
+      but[0].style.backgroundColor = but[1];
+    } else {
+      but[0].style.backgroundColor = starterColor;
+    }
   } else {
-    stopLight.style.backgroundColor = starterColor;
+
   }
+
 }
 
-function toggleSlow() {
-
-  if (slowLight.style.backgroundColor === starterColor) {
-    slowLight.style.backgroundColor = "yellow";
-  } else {
-    slowLight.style.backgroundColor = starterColor;
-  }
+function hover(e) {
+  if (obj[e.target.textContent.toString()]) {
+    console.log(`Entered ${e.target.textContent} button`)
+  } 
 }
 
-function toggleGo() {
-
-  if (goLight.style.backgroundColor === starterColor) {
-    goLight.style.backgroundColor = "green";
-  } else {
-    goLight.style.backgroundColor = starterColor;
-  }
+function leave(e) {
+  if (obj[e.target.textContent.toString()]) {
+    console.log(`Left ${e.target.textContent} button`)
+  } 
 }
